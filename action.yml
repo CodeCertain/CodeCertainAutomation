@@ -1,4 +1,4 @@
-name: CodeCertain Commit Report
+name: CodeCertain Automated Report
 run-name: Generating a report for your most pushed commit
 on:
   push:
