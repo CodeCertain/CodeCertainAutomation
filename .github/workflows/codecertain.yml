@@ -1,0 +1,31 @@
+name: CodeCertain
+run-name: Generating a report for your most pushed commit
+on:
+  push:
+    paths:
+      - '**.java'
+      - '**.py'
+      - '**.cpp'
+jobs:
+  Generate-And-Push-Report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Formatting Variables
+        run:
+          BRANCH=$(echo $GITHUB_REF_NAME | sed 's/\//\%SL/g')
+          echo "BRANCH=$BRANCH" >> $GITHUB_ENV
+      - name: Analyze Commit
+        id: dcp
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: format('https://dcp.codecertain.ai/data_create_predict/commit/{0}/{1}/{2}/GitHub/{3}/true/full', $GITHUB_REPOSITORY, $BRANCH, $GITHUB_SHA, ${{ secrets.GITHUB_TOKEN }})
+          method: 'GET'
+          contentType: 'application/json'
+          timeout: 900000
+      - name: Generate Report
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: format('https://mlp.codecertain.ai/ml_predict/commit/{0}/{1}/{2}/{3}/GitHub/{4}/{5}/None/None/None/true/full/{6}', $GITHUB_REPOSITORY, $BRANCH, $GITHUB_REPOSITORY, $BRANCH, ${{ secrets.GITHUB_TOKEN }}, $GITHUB_SHA, ${{ fromJson(steps.dcp.outputs.response).message }})
+          method: 'GET'
+          contentType: 'application/json'
+          timeout: 900000
