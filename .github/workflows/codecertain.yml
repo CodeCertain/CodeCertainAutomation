@@ -14,7 +14,7 @@ jobs:
         run: echo "BRANCH=$(echo $GITHUB_REF_NAME | sed 's/\//\%SL/g')" >> $GITHUB_ENV
       - name: Print URL
         run: |
-          echo "The string is: https://dcp.codecertain.ai/data_create_predict/commit/$GITHUB_REPOSITORY/$BRANCH/$GITHUB_SHA/GitHub/${{ secrets.GITHUB_TOKEN }}/true/full"
+          echo "The string is: https://dcp.codecertain.ai/data_create_predict/commit/$GITHUB_REPOSITORY/$BRANCH/$GITHUB_SHA/GitHub/$GITHUB_TOKEN/true/full"
       - name: Analyze Commit
         id: dcp
         uses: fjogeleit/http-request-action@v1
