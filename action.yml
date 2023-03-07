@@ -1,4 +1,5 @@
 name: CodeCertain
+description: Automated code quality report generation for each commit powered by CodeCertain
 run-name: Generating a report for your most pushed commit
 on:
   push:
