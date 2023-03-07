@@ -14,19 +14,19 @@ jobs:
         run: echo "BRANCH=$(echo $GITHUB_REF_NAME | sed 's/\//\%SL/g')" >> $GITHUB_ENV
       - name: Print URL
         run: |
-          echo "The string is: https://dcp.codecertain.ai/data_create_predict/commit/$GITHUB_REPOSITORY/$BRANCH/$GITHUB_SHA/GitHub/${{ secrets.GITHUB_TOKEN }}/true/full' ) }}"
+          echo "The string is: https://dcp.codecertain.ai/data_create_predict/commit/$GITHUB_REPOSITORY/$BRANCH/$GITHUB_SHA/GitHub/${{ secrets.GITHUB_TOKEN }}/true/full"
       - name: Analyze Commit
         id: dcp
         uses: fjogeleit/http-request-action@v1
         with:
-          url: format('https://dcp.codecertain.ai/data_create_predict/commit/{0}/{1}/{2}/GitHub/{3}/true/full', env.GITHUB_REPOSITORY, env.BRANCH, env.GITHUB_SHA, secrets.GITHUB_TOKEN)
+          url: "https://dcp.codecertain.ai/data_create_predict/commit/$GITHUB_REPOSITORY/$BRANCH/$GITHUB_SHA/GitHub/${{ secrets.GITHUB_TOKEN }}/true/full"
           method: 'GET'
           contentType: 'application/json'
           timeout: 900000
       - name: Generate Report
         uses: fjogeleit/http-request-action@v1
         with:
-          url: format('https://mlp.codecertain.ai/ml_predict/commit/{0}/{1}/{2}/{3}/GitHub/{4}/{5}/None/None/None/true/full/{6}', $GITHUB_REPOSITORY, $BRANCH, $GITHUB_REPOSITORY, $BRANCH, ${{ secrets.GITHUB_TOKEN }}, $GITHUB_SHA, ${{ fromJson(steps.dcp.outputs.response).message }})
+          url: "https://mlp.codecertain.ai/ml_predict/commit/$GITHUB_REPOSITORY/$BRANCH/$GITHUB_REPOSITORY/$BRANCH/GitHub/${{ secrets.GITHUB_TOKEN }}/$GITHUB_SHA/None/None/None/true/full/${{ fromJson(steps.dcp.outputs.response).message }}"
           method: 'GET'
           contentType: 'application/json'
           timeout: 900000
