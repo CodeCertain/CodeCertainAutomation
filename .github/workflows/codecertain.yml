@@ -12,11 +12,8 @@ jobs:
     steps:
       - name: Formatting Variables
         run: echo "BRANCH=$(echo $GITHUB_REF_NAME | sed 's/\//\%SL/g')" >> $GITHUB_ENV
-          echo "BRANCH=$BRANCH" >> $GITHUB_ENV
       - name: Print URL
         run: |
-          echo "Branch: $BRANCH"
-          echo "$(echo $GITHUB_REF_NAME | sed 's/\//\%SL/g')"
           echo "The string is: https://dcp.codecertain.ai/data_create_predict/commit/$GITHUB_REPOSITORY/$BRANCH/$GITHUB_SHA/GitHub/${{ secrets.GITHUB_TOKEN }}/true/full' ) }}"
       - name: Analyze Commit
         id: dcp
