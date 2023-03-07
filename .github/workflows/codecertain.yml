@@ -16,7 +16,7 @@ jobs:
           echo "BRANCH=$BRANCH" >> $GITHUB_ENV
       - name: Print URL
         run: |
-          echo "The string is: ${{ format('https://dcp.codecertain.ai/data_create_predict/commit/{0}/{1}/{2}/GitHub/{3}/true/full', env.GITHUB_REPOSITORY, env.BRANCH, env.GITHUB_SHA, secrets.GITHUB_TOKEN) }}"
+          echo "The string is: ${{ format('https://dcp.codecertain.ai/data_create_predict/commit/{0}/{1}/{2}/GitHub/{3}/true/full', vars.GITHUB_REPOSITORY, vars.BRANCH, vars.GITHUB_SHA, secrets.GITHUB_TOKEN) }}"
           echo "${{ format('{0} says {1}', github.actor, matrix.greeting) }}"
       - name: Analyze Commit
         id: dcp
