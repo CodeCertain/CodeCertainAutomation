@@ -37,6 +37,22 @@ jobs:
           method: 'GET'
           contentType: 'application/json'
           timeout: 900000
+      - name: ML Tools Code2Vec
+        if: steps.check_paths.outputs.report == 'true'
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://code2vec.codecertain.ai/mltools/code2vec/${{ fromJson(steps.dcp.outputs.response).message }}"
+          method: 'GET'
+          contentType: 'application/json'
+          timeout: 900000
+      - name: ML Tools SLMoC
+        if: steps.check_paths.outputs.report == 'true'
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://slmoc.codecertain.ai/mltools/slmoc/${{ fromJson(steps.dcp.outputs.response).message }}"
+          method: 'GET'
+          contentType: 'application/json'
+          timeout: 900000
       - name: Generate Report
         if: steps.check_paths.outputs.report == 'true'
         uses: fjogeleit/http-request-action@v1
